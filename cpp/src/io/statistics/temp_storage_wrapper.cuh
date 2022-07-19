@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, NVIDIA CORPORATION.
+ * Copyright (c) 2021-2022, NVIDIA CORPORATION.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,13 @@
 
 #pragma once
 
+#include "byte_array_view.cuh"
+#include "statistics.cuh"
+
 #include <cudf/fixed_point/fixed_point.hpp>
 #include <cudf/strings/string_view.cuh>
 #include <cudf/wrappers/durations.hpp>
 #include <cudf/wrappers/timestamps.hpp>
-
-#include "statistics.cuh"
 
 #include <cub/cub.cuh>
 
@@ -61,6 +62,7 @@ union block_reduce_storage {
   DECLARE_MEMBER(float)
   DECLARE_MEMBER(double)
   DECLARE_MEMBER(string_view)
+  DECLARE_MEMBER(byte_array_view)
 };
 
 #define STORAGE_WRAPPER_GET(TYPE)                                                                 \
@@ -96,6 +98,7 @@ struct storage_wrapper {
   STORAGE_WRAPPER_GET(float);
   STORAGE_WRAPPER_GET(double);
   STORAGE_WRAPPER_GET(string_view);
+  STORAGE_WRAPPER_GET(byte_array_view);
 };
 
 #undef DECLARE_MEMBER
